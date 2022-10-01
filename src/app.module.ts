@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
+import { DbtestModule } from './dbtest/dbtest.module';
 
 @Module({
   imports: [
@@ -14,9 +15,10 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DB_USERNAME,
       database: process.env.DB_DATABASE,
       password: process.env.DB_PASSWORD,
-      entities: [__dirname + '/../**/*.entity.{js,ts}'],
-      synchronize: false,
+      entities: [__dirname + '/**/*.entity.{js,ts}'],
+      synchronize: true,
     }),
+    DbtestModule,
   ],
   controllers: [AppController],
   providers: [AppService],
