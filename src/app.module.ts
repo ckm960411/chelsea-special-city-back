@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { DbtestModule } from './dbtest/dbtest.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { DbtestModule } from './dbtest/dbtest.module';
       synchronize: true,
     }),
     DbtestModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
