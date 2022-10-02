@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcrypt';
+import { omit } from 'lodash';
 import { SignInDto } from './dto/signin.dto';
 import { SignUpDto } from './dto/signup.dto';
 import { UserRepository } from './user.repository';
@@ -28,9 +29,10 @@ export class AuthService {
       throw new UnauthorizedException('이메일과 비밀번호를 확인해주세요.');
     }
 
+    const userWithoutPassword = omit(user, 'password');
     const accessToken = this.jwtService.sign({ email: signInDto.email });
     return {
-      ...user,
+      ...userWithoutPassword,
       token: accessToken,
     };
   }
