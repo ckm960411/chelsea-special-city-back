@@ -1,4 +1,3 @@
-import { UserStatus } from '../user.entity';
 import {
   IsEmail,
   IsString,
@@ -6,6 +5,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { UserStatus } from '../enum/user-status.enum';
 
 export class SignUpDto {
   @IsString()

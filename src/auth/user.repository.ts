@@ -7,7 +7,8 @@ import { hash } from 'bcrypt';
 import { CustomRepository } from 'src/typeorm/typeorm-ex.decarator';
 import { Repository } from 'typeorm';
 import { SignUpDto } from './dto/signup.dto';
-import { User, UserStatus } from './user.entity';
+import { UserStatus } from './enum/user-status.enum';
+import { User } from './user.entity';
 
 @CustomRepository(User)
 export class UserRepository extends Repository<User> {

@@ -5,11 +5,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-
-export enum UserStatus {
-  PUBLIC = 'PUBLIC',
-  ADMIN = 'ADMIN',
-}
+import { UserStatus } from './enum/user-status.enum';
 
 @Entity()
 @Unique(['email'])
