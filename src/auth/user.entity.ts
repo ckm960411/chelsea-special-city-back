@@ -1,15 +1,10 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  Unique,
-} from 'typeorm';
+import { BaseEntityWithTimestamp } from 'src/common/Entities/base-entity-timestap.entity';
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { UserStatus } from './enum/user-status.enum';
 
 @Entity()
 @Unique(['email'])
-export class User extends BaseEntity {
+export class User extends BaseEntityWithTimestamp {
   @PrimaryGeneratedColumn()
   id: number;
 
