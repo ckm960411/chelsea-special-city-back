@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsString,
@@ -8,14 +9,29 @@ import {
 import { UserStatus } from '../enum/user-status.enum';
 
 export class SignUpDto {
+  @ApiProperty({
+    example: 'KMin',
+    description: 'username',
+    required: true,
+  })
   @IsString()
   @MinLength(2)
   @MaxLength(20)
   username: string;
 
+  @ApiProperty({
+    example: 'kmin@kakao.com',
+    description: 'email',
+    required: true,
+  })
   @IsEmail()
   email: string;
 
+  @ApiProperty({
+    example: '123456',
+    description: 'password',
+    required: true,
+  })
   @IsString()
   @MinLength(6)
   @MaxLength(20)
