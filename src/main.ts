@@ -13,8 +13,10 @@ async function bootstrap() {
     credentials: true,
   });
 
-  await app.listen(process.env.PORT, () => {
-    console.log(`app is listening at ${process.env.PORT}`);
+  const PORT = process.env.PORT;
+
+  await app.listen(PORT, () => {
+    console.log(`app is listening at ${PORT}`);
   });
 }
 bootstrap();
