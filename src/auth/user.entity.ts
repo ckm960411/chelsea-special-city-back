@@ -1,8 +1,8 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum UserStatus {
-  PUBLIC,
-  ADMIN,
+  PUBLIC = 'public',
+  ADMIN = 'admin',
 }
 
 @Entity()
