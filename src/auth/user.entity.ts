@@ -1,4 +1,3 @@
-import { omit } from 'lodash-es';
 import {
   BaseEntity,
   Column,
@@ -26,6 +25,9 @@ export class User extends BaseEntity {
 
   @Column('text')
   password: string;
+
+  @Column('text', { default: '' })
+  profileImage: string;
 
   @Column({ type: 'enum', enum: UserStatus, default: UserStatus.PUBLIC })
   userStatus: UserStatus;
