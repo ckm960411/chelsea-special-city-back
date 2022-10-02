@@ -4,15 +4,18 @@ import {
   Get,
   Post,
   UseGuards,
+  UseInterceptors,
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
+import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/signin.dto';
 import { SignUpDto } from './dto/signup.dto';
 import { JwtAuthGuard } from './jwt/jwt.guard';
 
+@UseInterceptors(SuccessInterceptor)
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -25,8 +28,8 @@ export class AuthController {
 
   @ApiOperation({ summary: '로그인' })
   @Post('login')
-  signInUser(@Body(ValidationPipe) signInDtS: SignInDto) {
-    return this.authService.signInUser(signInDtS);
+  signInUser(@Body(ValidationPipe) signInDto: SignInDto) {
+    return this.authService.signInUser(signInDto);
   }
 
   @Get()
