@@ -1,21 +1,31 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
 
 export enum UserStatus {
-  PUBLIC = 'public',
-  ADMIN = 'admin',
+  PUBLIC = 'PUBLIC',
+  ADMIN = 'ADMIN',
 }
 
 @Entity()
+@Unique(['email'])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column('text', { nullable: true })
   username: string;
 
-  @Column()
+  @Column('text', { unique: true })
+  email: string;
+
+  @Column('text', { select: false })
   password: string;
 
-  @Column()
+  @Column({ type: 'enum', enum: UserStatus, default: UserStatus.PUBLIC })
   userStatus: UserStatus;
 }

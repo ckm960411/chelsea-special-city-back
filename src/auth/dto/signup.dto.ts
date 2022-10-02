@@ -1,11 +1,20 @@
 import { UserStatus } from '../user.entity';
-import { IsString, Matches, MaxLength, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class SignUpDto {
   @IsString()
   @MinLength(2)
   @MaxLength(20)
   username: string;
+
+  @IsEmail()
+  email: string;
 
   @IsString()
   @MinLength(6)
