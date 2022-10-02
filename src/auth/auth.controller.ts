@@ -3,10 +3,10 @@ import {
   Controller,
   Get,
   Post,
-  Req,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
+import { GetUser } from 'src/common/decorators/get-user.decorator';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/signin.dto';
 import { SignUpDto } from './dto/signup.dto';
@@ -28,7 +28,7 @@ export class AuthController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  test(@Req() req) {
-    console.log('user: ', req.user);
+  test(@GetUser() user) {
+    return user;
   }
 }
