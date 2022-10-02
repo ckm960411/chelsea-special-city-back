@@ -2,6 +2,7 @@ import {
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
+import { hash } from 'bcrypt';
 import { CustomRepository } from 'src/typeorm/typeorm-ex.decarator';
 import { Repository } from 'typeorm';
 import { SignUpDto } from './dto/signup.dto';
@@ -11,10 +12,13 @@ import { User, UserStatus } from './user.entity';
 export class UserRepository extends Repository<User> {
   async createUser(signUpDto: SignUpDto) {
     const { username, email, password, userStatus } = signUpDto;
+
+    const hashedPassword = await hash(password, 10);
+
     const user = this.create({
       email,
       username,
-      password,
+      password: hashedPassword,
       userStatus: userStatus ?? UserStatus.PUBLIC,
     });
 
