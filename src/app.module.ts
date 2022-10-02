@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { DbtestModule } from './dbtest/dbtest.module';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 
@@ -20,7 +19,6 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
       entities: [__dirname + '/**/*.entity.{js,ts}'],
       synchronize: true,
     }),
-    DbtestModule,
     AuthModule,
   ],
   controllers: [AppController],
