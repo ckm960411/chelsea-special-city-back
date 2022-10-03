@@ -27,7 +27,7 @@ export class PlayersService {
       return uploadImagekit(file);
     });
 
-    const result = Promise.all(promises);
+    const result = await Promise.all(promises);
     return result;
   }
 }
