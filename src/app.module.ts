@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
+import { PlayersModule } from './players/players.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
       inject: [ConfigService],
     }),
     AuthModule,
+    PlayersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
