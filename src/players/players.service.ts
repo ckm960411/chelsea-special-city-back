@@ -6,21 +6,28 @@ import Imagekit = require('imagekit');
 export class PlayersService {
   constructor(private readonly configService: ConfigService) {}
 
-  async uploadPlayerImages(file) {
+  async uploadPlayerImages(files) {
     const imagekit = new Imagekit({
       publicKey: this.configService.get<string>('IMAGE_KIT_PUBLIC_KEY'),
       privateKey: this.configService.get<string>('IMAGE_KIT_PRIVATE_KEY'),
       urlEndpoint: this.configService.get<string>('IMAGE_KIT_URL_END_POINT'),
     });
 
-    const response = await imagekit
-      .upload({
-        file: file.buffer,
-        fileName: file.originalname,
-        folder: 'players',
-      })
-      .then((res) => res.url);
+    const uploadImagekit = async (file: any) => {
+      return await imagekit
+        .upload({
+          file: file.buffer,
+          fileName: file.originalname,
+          folder: 'players',
+        })
+        .then((res) => res.url);
+    };
 
-    return response;
+    const promises = files.map((file) => {
+      return uploadImagekit(file);
+    });
+
+    const result = Promise.all(promises);
+    return result;
   }
 }

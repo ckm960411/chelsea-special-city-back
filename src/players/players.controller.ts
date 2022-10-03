@@ -1,10 +1,10 @@
 import {
   Controller,
   Post,
-  UploadedFile,
+  UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { PlayersService } from './players.service';
 
 @Controller('players')
@@ -12,8 +12,8 @@ export class PlayersController {
   constructor(private readonly playersService: PlayersService) {}
 
   @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  async uploadPlayerImage(@UploadedFile() file) {
+  @UseInterceptors(FilesInterceptor('file'))
+  async uploadPlayerImage(@UploadedFiles() file) {
     return this.playersService.uploadPlayerImages(file);
   }
 }
