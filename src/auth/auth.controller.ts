@@ -14,6 +14,7 @@ import { AuthService } from './auth.service';
 import { SignInDto } from './dto/signin.dto';
 import { SignUpDto } from './dto/signup.dto';
 import { JwtAuthGuard } from './jwt/jwt.guard';
+import { User } from './user.entity';
 
 @UseInterceptors(SuccessInterceptor)
 @Controller('auth')
@@ -32,8 +33,13 @@ export class AuthController {
     return this.authService.signInUser(signInDto);
   }
 
-  @Get()
+  @Get('me')
   @UseGuards(JwtAuthGuard)
+  async me(@GetUser() user: User) {
+    return this.authService.getMe(user);
+  }
+
+  @Get()
   test(@GetUser() user) {
     return user;
   }

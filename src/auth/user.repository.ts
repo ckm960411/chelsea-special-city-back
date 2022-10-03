@@ -4,6 +4,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { hash } from 'bcrypt';
+import { omit } from 'lodash';
 import { CustomRepository } from 'src/typeorm/typeorm-ex.decarator';
 import { Repository } from 'typeorm';
 import { SignUpDto } from './dto/signup.dto';
@@ -43,5 +44,15 @@ export class UserRepository extends Repository<User> {
     }
 
     return user;
+  }
+
+  async findUserById(id: number) {
+    const user = await this.findOne({ where: { id } });
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    return omit(user, 'password');
   }
 }

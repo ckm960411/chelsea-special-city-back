@@ -5,6 +5,7 @@ import { compare } from 'bcrypt';
 import { omit } from 'lodash';
 import { SignInDto } from './dto/signin.dto';
 import { SignUpDto } from './dto/signup.dto';
+import { User } from './user.entity';
 import { UserRepository } from './user.repository';
 
 @Injectable()
@@ -35,5 +36,10 @@ export class AuthService {
       ...userWithoutPassword,
       token: accessToken,
     };
+  }
+
+  async getMe(user: User) {
+    const found = await this.userRepository.findUserById(user.id);
+    return found;
   }
 }
