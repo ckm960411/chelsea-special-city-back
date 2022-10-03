@@ -2,22 +2,26 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.HOST,
-      port: Number(process.env.DB_PORT),
-      username: process.env.DB_USERNAME,
-      database: process.env.DB_DATABASE,
-      password: process.env.DB_PASSWORD,
-      entities: [__dirname + '/**/*.entity.{js,ts}'],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get<string>('HOST'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.get<string>('DB_USERNAME'),
+        database: configService.get<string>('DB_DATABASE'),
+        password: configService.get<string>('DB_PASSWORD'),
+        entities: [__dirname + '/**/*.entity.{js,ts}'],
+        synchronize: true,
+      }),
+      inject: [ConfigService],
     }),
     AuthModule,
   ],
