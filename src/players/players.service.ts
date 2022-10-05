@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { addHours } from 'date-fns';
 import Imagekit = require('imagekit');
+// import ImageKit from 'imagekit';
 import { RegisterPlayerDto } from './dto/register-player.dto';
 import { PlayerRepository } from './players.repository';
 
@@ -41,6 +43,12 @@ export class PlayersService {
   }
 
   async registerPlayer(registerPlayerDto: RegisterPlayerDto) {
-    return this.playersRepository.createPlayer(registerPlayerDto);
+    const playerBirthDate = new Date(registerPlayerDto.birthDate);
+    const added = addHours(playerBirthDate, 9);
+    const data = {
+      ...registerPlayerDto,
+      birthDate: added.toISOString(),
+    };
+    return this.playersRepository.createPlayer(data);
   }
 }
