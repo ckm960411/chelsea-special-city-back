@@ -26,7 +26,7 @@ export class Player extends BaseEntity {
     required: true,
   })
   @IsString()
-  @Column('text', { nullable: false })
+  @Column('text', { nullable: false, unique: true })
   name: string;
 
   @ApiProperty({
@@ -60,7 +60,7 @@ export class Player extends BaseEntity {
     example: 'CAM, CM, LM, RM, LW, RW',
     description: `player's detail position list`,
   })
-  @Column()
+  @Column('text', { array: true })
   detailPosition: string[];
 
   @ApiProperty({

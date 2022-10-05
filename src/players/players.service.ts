@@ -1,10 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Imagekit = require('imagekit');
+import { RegisterPlayerDto } from './dto/register-player.dto';
+import { PlayerRepository } from './players.repository';
 
 @Injectable()
 export class PlayersService {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly playersRepository: PlayerRepository,
+  ) {}
 
   async uploadPlayerImages(files) {
     const imagekit = new Imagekit({
@@ -29,5 +34,9 @@ export class PlayersService {
 
     const result = await Promise.all(promises);
     return result;
+  }
+
+  async registerPlayer(registerPlayerDto: RegisterPlayerDto) {
+    return this.playersRepository.createPlayer(registerPlayerDto);
   }
 }
