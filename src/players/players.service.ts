@@ -11,6 +11,10 @@ export class PlayersService {
     private readonly playersRepository: PlayerRepository,
   ) {}
 
+  async getAllPlayers() {
+    return this.playersRepository.findAllPlayers();
+  }
+
   async uploadPlayerImages(files) {
     const imagekit = new Imagekit({
       publicKey: this.configService.get<string>('IMAGE_KIT_PUBLIC_KEY'),

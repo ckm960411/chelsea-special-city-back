@@ -9,6 +9,15 @@ import { Player } from './player.entity';
 
 @CustomRepository(Player)
 export class PlayerRepository extends Repository<Player> {
+  async findAllPlayers() {
+    try {
+      const players = await this.find();
+      return players;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+  }
+
   async createPlayer(registerPlayerDto: RegisterPlayerDto) {
     const player = this.create(registerPlayerDto);
 

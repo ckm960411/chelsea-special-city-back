@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   UploadedFiles,
   UseGuards,
@@ -16,6 +17,11 @@ import { PlayersService } from './players.service';
 @Controller('players')
 export class PlayersController {
   constructor(private readonly playersService: PlayersService) {}
+
+  @Get()
+  async getAllPlayers() {
+    return this.playersService.getAllPlayers();
+  }
 
   @Post('upload')
   @UseInterceptors(FilesInterceptor('files'))
