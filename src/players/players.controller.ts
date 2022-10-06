@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   UploadedFiles,
   UseGuards,
@@ -21,6 +22,11 @@ export class PlayersController {
   @Get()
   async getAllPlayers() {
     return this.playersService.getAllPlayers();
+  }
+
+  @Get(':playerName')
+  async getPlayer(@Param('playerName') name: string) {
+    return this.playersService.getPlayer(name);
   }
 
   @Post('upload')

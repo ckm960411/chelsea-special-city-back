@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { addHours } from 'date-fns';
 import Imagekit = require('imagekit');
-// import ImageKit from 'imagekit';
 import { RegisterPlayerDto } from './dto/register-player.dto';
 import { PlayerRepository } from './players.repository';
 
@@ -15,6 +14,11 @@ export class PlayersService {
 
   async getAllPlayers() {
     return this.playersRepository.findAllPlayers();
+  }
+
+  async getPlayer(name: string) {
+    const coverted = name.split('_').join(' ');
+    return this.playersRepository.findPlayer(coverted);
   }
 
   async uploadPlayerImages(files) {

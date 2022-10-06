@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
@@ -13,6 +14,20 @@ export class PlayerRepository extends Repository<Player> {
     try {
       const players = await this.find();
       return players;
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async findPlayer(name: string) {
+    try {
+      const player = await this.findOne({ where: { name } });
+
+      if (!player) {
+        throw new BadRequestException();
+      }
+
+      return player;
     } catch (error) {
       throw new InternalServerErrorException();
     }
