@@ -8,5 +8,6 @@ import { PlayersService } from './players.service';
   imports: [TypeOrmExModule.forCustomRepository([PlayerRepository])],
   controllers: [PlayersController],
   providers: [PlayersService],
+  exports: [PlayersService],
 })
 export class PlayersModule {}

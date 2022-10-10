@@ -17,8 +17,10 @@ export class PlayersService {
   }
 
   async getPlayer(name: string) {
-    const coverted = name.split('_').join(' ');
-    return this.playersRepository.findPlayer(coverted);
+    const converted = name.split('_').join(' ');
+    const player = await this.playersRepository.findPlayer(converted);
+
+    return player;
   }
 
   async uploadPlayerImages(files) {
