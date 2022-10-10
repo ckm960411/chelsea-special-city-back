@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
+import { Comment } from 'src/comments/comment.entity';
 import { BaseEntityWithTimestamp } from 'src/common/Entities/base-entity-timestap.entity';
-import { Column, Entity, Unique } from 'typeorm';
+import { Column, Entity, OneToMany, Unique } from 'typeorm';
 import { UserStatus } from './enum/user-status.enum';
 
 @Entity()
@@ -50,4 +51,7 @@ export class User extends BaseEntityWithTimestamp {
   })
   @Column({ type: 'enum', enum: UserStatus, default: UserStatus.PUBLIC })
   userStatus: UserStatus;
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comments: Promise<string[]>;
 }

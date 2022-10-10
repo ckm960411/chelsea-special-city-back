@@ -4,10 +4,12 @@ import {
   BaseEntity,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 import { Position } from './enum';
+import { Comment } from 'src/comments/comment.entity';
 
 @Entity()
 @Unique(['name'])
@@ -94,4 +96,7 @@ export class Player extends BaseEntity {
   @IsNumber()
   @Column()
   height: number;
+
+  @OneToMany(() => Comment, (comment) => comment.player)
+  comments: Promise<string[]>;
 }
