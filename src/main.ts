@@ -29,7 +29,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('C.I.C')
-    .setDescription('cat')
+    .setDescription('chelsea-special-city')
     .setVersion('1.0.0')
     .build();
   const document: OpenAPIObject = SwaggerModule.createDocument(app, config);

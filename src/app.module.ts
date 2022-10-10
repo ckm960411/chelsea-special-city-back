@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { PlayersModule } from './players/players.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { PlayersModule } from './players/players.module';
     }),
     AuthModule,
     PlayersModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
