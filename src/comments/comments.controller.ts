@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
 import { User } from 'src/auth/user.entity';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
@@ -12,6 +12,10 @@ export class CommentsController {
     private readonly commentsService: CommentsService,
     private playersService: PlayersService,
   ) {}
+  @Get(':playerName')
+  async getPlayerComments(@Param('playerName') playerName: string) {
+    return this.commentsService.getPlayerComments(playerName);
+  }
 
   @UseGuards(JwtAuthGuard)
   @Post(':playerName')

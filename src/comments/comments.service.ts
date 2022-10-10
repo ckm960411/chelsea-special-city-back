@@ -7,6 +7,11 @@ import { CreatePlayerCommentDto } from './dto/create-player-comment.dto';
 @Injectable()
 export class CommentsService {
   constructor(private commentRepository: CommentRepository) {}
+  async getPlayerComments(name: string) {
+    const converted = name.split('_').join(' ');
+    return this.commentRepository.getComments(converted);
+  }
+
   async createPlayerComment(
     createPlayerCommentDto: CreatePlayerCommentDto,
     player: Player,

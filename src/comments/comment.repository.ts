@@ -8,6 +8,10 @@ import { CreatePlayerCommentDto } from './dto/create-player-comment.dto';
 
 @CustomRepository(Comment)
 export class CommentRepository extends Repository<Comment> {
+  async getComments(name: string) {
+    return this.find({ where: { player: { name } } });
+  }
+
   async createPlayerComment(
     createPlayerCommentDto: CreatePlayerCommentDto,
     player: Player,
