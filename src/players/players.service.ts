@@ -17,8 +17,13 @@ export class PlayersService {
   }
 
   async getPlayer(name: string) {
-    const converted = name.split('_').join(' ');
-    const player = await this.playersRepository.findPlayer(converted);
+    let playerName: string;
+    if (name.includes('_')) {
+      playerName = name.split('_').join(' ');
+    } else {
+      playerName = name;
+    }
+    const player = await this.playersRepository.findPlayer(playerName);
 
     return player;
   }
