@@ -71,4 +71,32 @@ export class CommentRepository extends Repository<Comment> {
 
     return comment;
   }
+
+  async deletePlayerComment(user: User, commentId: number) {
+    const comment = await this.findOne({
+      where: { id: commentId },
+      relations: { user: true },
+      select: { user: { id: true } },
+    });
+
+    if (!comment) {
+      throw new BadRequestException();
+    }
+
+    if (user.id !== comment.user.id) {
+      throw new UnauthorizedException();
+    }
+
+    // 댓글 삭제
+    try {
+      const result = await this.delete(commentId);
+      if (result.affected === 1) {
+        return true;
+      } else {
+        throw new InternalServerErrorException();
+      }
+    } catch {
+      throw new InternalServerErrorException();
+    }
+  }
 }

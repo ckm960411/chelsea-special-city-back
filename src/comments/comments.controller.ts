@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -43,7 +44,7 @@ export class CommentsController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  async updateComment(
+  async updatePlayerComment(
     @GetUser() user: User,
     @Param('id') commentId: number,
     @Body() updatePlayerCommentDto: UpdatePlayerCommentDto,
@@ -53,5 +54,14 @@ export class CommentsController {
       commentId,
       updatePlayerCommentDto,
     );
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  async deletePlayerComment(
+    @GetUser() user: User,
+    @Param('id') commentId: number,
+  ) {
+    return this.commentsService.deletePlayerComment(user, commentId);
   }
 }

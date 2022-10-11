@@ -36,4 +36,8 @@ export class CommentsService {
       updatePlayerCommentDto,
     );
   }
+
+  async deletePlayerComment(user: User, commentId: number) {
+    return this.commentRepository.deletePlayerComment(user, commentId);
+  }
 }
