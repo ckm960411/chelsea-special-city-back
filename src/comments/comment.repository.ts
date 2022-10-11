@@ -17,6 +17,7 @@ export class CommentRepository extends Repository<Comment> {
       where: { player: { name } },
       relations: { user: true },
       order: { createdAt: 'DESC' },
+      select: { user: { id: true, username: true } },
     });
 
     return comments;
