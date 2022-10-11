@@ -32,7 +32,7 @@ export class User extends BaseEntityWithTimestamp {
     description: 'password',
     required: true,
   })
-  @Column('text', { select: false })
+  @Column('text')
   password: string;
 
   @ApiProperty({

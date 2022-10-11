@@ -3,6 +3,7 @@ import { User } from 'src/auth/user.entity';
 import { Player } from 'src/players/player.entity';
 import { CommentRepository } from './comment.repository';
 import { CreatePlayerCommentDto } from './dto/create-player-comment.dto';
+import { UpdatePlayerCommentDto } from './dto/update-player-comment.dto';
 
 @Injectable()
 export class CommentsService {
@@ -21,6 +22,18 @@ export class CommentsService {
       createPlayerCommentDto,
       player,
       user,
+    );
+  }
+
+  async updatePlayerComment(
+    user: User,
+    commentId: number,
+    updatePlayerCommentDto: UpdatePlayerCommentDto,
+  ) {
+    return this.commentRepository.updatePlayerComment(
+      user,
+      commentId,
+      updatePlayerCommentDto,
     );
   }
 }
