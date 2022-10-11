@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   InternalServerErrorException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { User } from 'src/auth/user.entity';
 import { Player } from 'src/players/player.entity';
@@ -54,6 +55,10 @@ export class CommentRepository extends Repository<Comment> {
 
     if (!comment) {
       throw new BadRequestException();
+    }
+
+    if (comment.user.id !== user.id) {
+      throw new UnauthorizedException();
     }
 
     comment.content = updatePlayerCommentDto.content;
