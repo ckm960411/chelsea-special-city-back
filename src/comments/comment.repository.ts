@@ -46,7 +46,11 @@ export class CommentRepository extends Repository<Comment> {
     commentId: number,
     updatePlayerCommentDto: UpdatePlayerCommentDto,
   ) {
-    const comment = await this.findOne({ where: { id: commentId } });
+    const comment = await this.findOne({
+      where: { id: commentId },
+      relations: { user: true },
+      select: { user: { id: true, username: true } },
+    });
 
     if (!comment) {
       throw new BadRequestException();
