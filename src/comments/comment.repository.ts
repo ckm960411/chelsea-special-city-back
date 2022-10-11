@@ -12,6 +12,7 @@ export class CommentRepository extends Repository<Comment> {
     const comments = await this.find({
       where: { player: { name } },
       relations: { user: true },
+      order: { createdAt: 'DESC' },
     });
 
     return comments;
