@@ -33,6 +33,20 @@ export class PlayerRepository extends Repository<Player> {
     }
   }
 
+  async searchPlayers(name: string) {
+    try {
+      const players = this.createQueryBuilder('players')
+        .where(`LOWER(name) LIKE LOWER(:name)`, {
+          name: `%${name.toLowerCase()}%`,
+        })
+        .getMany();
+
+      return players;
+    } catch {
+      throw new InternalServerErrorException();
+    }
+  }
+
   async createPlayer(registerPlayerDto: RegisterPlayerDto) {
     const player = this.create(registerPlayerDto);
 

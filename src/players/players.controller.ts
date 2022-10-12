@@ -29,6 +29,12 @@ export class PlayersController {
     return this.playersService.getPlayer(name);
   }
 
+  @Get('search/:playerName')
+  @UseGuards(JwtAuthGuard)
+  async searchPlayers(@Param('playerName') name: string) {
+    return this.playersService.searchPlayers(name);
+  }
+
   @Post('upload')
   @UseInterceptors(FilesInterceptor('files'))
   async uploadPlayerImage(@UploadedFiles() files) {

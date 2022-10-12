@@ -28,6 +28,12 @@ export class PlayersService {
     return player;
   }
 
+  async searchPlayers(name: string) {
+    const players = await this.playersRepository.searchPlayers(name);
+
+    return players;
+  }
+
   async uploadPlayerImages(files) {
     const imagekit = new Imagekit({
       publicKey: this.configService.get<string>('IMAGE_KIT_PUBLIC_KEY'),
