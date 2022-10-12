@@ -39,6 +39,7 @@ export class PlayerRepository extends Repository<Player> {
         .where(`LOWER(name) LIKE LOWER(:name)`, {
           name: `%${name.toLowerCase()}%`,
         })
+        .orderBy('players.backNumber', 'ASC')
         .getMany();
 
       return players;
