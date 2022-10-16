@@ -2,10 +2,12 @@ import {
   BadRequestException,
   ConflictException,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { CustomRepository } from 'src/typeorm/typeorm-ex.decarator';
 import { Repository } from 'typeorm';
 import { RegisterPlayerDto } from './dto/register-player.dto';
+import { UpdatePlayerDto } from './dto/update-player.dto';
 import { Player } from './player.entity';
 
 @CustomRepository(Player)
@@ -59,6 +61,29 @@ export class PlayerRepository extends Repository<Player> {
       } else {
         throw new InternalServerErrorException();
       }
+    }
+  }
+
+  async updatePlayer(updatePlayerDto: UpdatePlayerDto, playerId: number) {
+    const player = await this.findOne({ where: { id: playerId } });
+
+    if (!player) {
+      throw new NotFoundException('일치하는 선수가 없습니다.');
+    }
+
+    const data = {
+      ...player,
+      ...updatePlayerDto,
+      id: playerId,
+    };
+
+    console.log('data: ', data);
+
+    try {
+      await this.save(data);
+      return data;
+    } catch {
+      throw new InternalServerErrorException();
     }
   }
 }

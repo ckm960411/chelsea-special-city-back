@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { addHours } from 'date-fns';
+import { addHours, startOfDay } from 'date-fns';
 import Imagekit = require('imagekit');
+import { User } from 'src/auth/user.entity';
 import { RegisterPlayerDto } from './dto/register-player.dto';
+import { UpdatePlayerDto } from './dto/update-player.dto';
 import { PlayerRepository } from './players.repository';
 
 @Injectable()
@@ -60,12 +62,32 @@ export class PlayersService {
   }
 
   async registerPlayer(registerPlayerDto: RegisterPlayerDto) {
-    const playerBirthDate = new Date(registerPlayerDto.birthDate);
-    const added = addHours(playerBirthDate, 9);
+    const playerBirtDate = startOfDay(new Date(registerPlayerDto.birthDate));
+    const added = addHours(playerBirtDate, 9);
     const data = {
       ...registerPlayerDto,
       birthDate: added.toISOString(),
     };
+
     return this.playersRepository.createPlayer(data);
+  }
+
+  async updatePlayer(
+    user: User,
+    updatePlayerDto: UpdatePlayerDto,
+    playerId: number,
+  ) {
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    const playerBirtDate = startOfDay(new Date(updatePlayerDto.birthDate));
+    const added = addHours(playerBirtDate, 9);
+    const data = {
+      ...updatePlayerDto,
+      birthDate: added.toISOString(),
+    };
+
+    return this.playersRepository.updatePlayer(data, playerId);
   }
 }
