@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { Position } from './enum';
 import { Comment } from 'src/comments/comment.entity';
+import { Stat } from 'src/stats/stats.entity';
 
 @Entity()
 @Unique(['name'])
@@ -99,4 +100,7 @@ export class Player extends BaseEntity {
 
   @OneToMany(() => Comment, (comment) => comment.player)
   comments: Promise<string[]>;
+
+  @OneToMany(() => Stat, (stat) => stat.player)
+  stats: Promise<Stat>;
 }

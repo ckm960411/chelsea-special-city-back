@@ -1,5 +1,13 @@
 import { IsNumber, IsString } from 'class-validator';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Player } from 'src/players/player.entity';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Stat extends BaseEntity {
@@ -25,4 +33,8 @@ export class Stat extends BaseEntity {
   @IsNumber()
   @Column({ default: 0 })
   cleanSheets: number;
+
+  @ManyToOne(() => Player, (player) => player)
+  @JoinColumn()
+  player: Player;
 }
