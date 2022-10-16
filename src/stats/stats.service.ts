@@ -8,7 +8,7 @@ import { StatRepository } from './stats.repository';
 export class StatsService {
   constructor(private readonly statRepository: StatRepository) {}
 
-  async createStats(
+  async createOrUpdateStats(
     user: User,
     createStatsDto: CreateStatsDto,
     player: Player,
@@ -17,6 +17,6 @@ export class StatsService {
       throw new UnauthorizedException();
     }
 
-    return this.statRepository.createStats(createStatsDto, player);
+    return this.statRepository.createOrUpdateStats(createStatsDto, player);
   }
 }

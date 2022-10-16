@@ -7,15 +7,27 @@ import { Stat } from './stats.entity';
 
 @CustomRepository(Stat)
 export class StatRepository extends Repository<Stat> {
-  async createStats(createStatsDto: CreateStatsDto, player: Player) {
-    const stats = this.create({
-      ...createStatsDto,
-      player,
-    });
+  async createOrUpdateStats(createStatsDto: CreateStatsDto, player: Player) {
+    const stat = await this.createQueryBuilder('stat')
+      .where('stat.playerId = :playerId', { playerId: player.id })
+      .getOne();
+
+    let data: any;
+    if (stat) {
+      data = {
+        ...stat,
+        ...createStatsDto,
+      };
+    } else {
+      data = this.create({
+        ...createStatsDto,
+        player,
+      });
+    }
 
     try {
-      await this.save(stats);
-      return stats;
+      await this.save(data);
+      return data;
     } catch {
       throw new InternalServerErrorException();
     }

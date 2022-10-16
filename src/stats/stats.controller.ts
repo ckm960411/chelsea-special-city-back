@@ -15,13 +15,13 @@ export class StatsController {
 
   @Post(':playerId')
   @UseGuards(JwtAuthGuard)
-  async createStats(
+  async createOrUpdateStats(
     @GetUser() user: User,
     @Body() createStatsDto: CreateStatsDto,
     @Param('playerId') playerId: number,
   ) {
     const player = await this.playersService.getPlayerById(playerId);
 
-    return this.statsService.createStats(user, createStatsDto, player);
+    return this.statsService.createOrUpdateStats(user, createStatsDto, player);
   }
 }
