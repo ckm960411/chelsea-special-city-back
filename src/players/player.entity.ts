@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString } from 'class-validator';
+import { IsDateString, IsNumber, IsString } from 'class-validator';
 import {
   BaseEntity,
   Column,
@@ -85,7 +85,7 @@ export class Player extends BaseEntity {
     example: '1999-01-09T15:00:00.000Z',
     description: `player's date of birth`,
   })
-  @IsString()
+  @IsDateString()
   @Column()
   birthDate: string;
 
