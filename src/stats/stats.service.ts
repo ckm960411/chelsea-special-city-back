@@ -19,4 +19,8 @@ export class StatsService {
 
     return this.statRepository.createOrUpdateStats(createStatsDto, player);
   }
+
+  async getPlayerStats(playerId: number) {
+    return this.statRepository.getPlayerStats(playerId);
+  }
 }

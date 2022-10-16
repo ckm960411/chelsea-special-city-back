@@ -1,4 +1,12 @@
-import { Body, Controller, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
 import { User } from 'src/auth/user.entity';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
@@ -23,5 +31,10 @@ export class StatsController {
     const player = await this.playersService.getPlayerById(playerId);
 
     return this.statsService.createOrUpdateStats(user, createStatsDto, player);
+  }
+
+  @Get(':playerId')
+  async getPlayerStats(@Param('playerId', ParseIntPipe) playerId: number) {
+    return this.statsService.getPlayerStats(playerId);
   }
 }

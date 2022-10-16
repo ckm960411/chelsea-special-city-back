@@ -1,4 +1,7 @@
-import { InternalServerErrorException } from '@nestjs/common';
+import {
+  InternalServerErrorException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Player } from 'src/players/player.entity';
 import { CustomRepository } from 'src/typeorm/typeorm-ex.decarator';
 import { Repository } from 'typeorm';
@@ -31,5 +34,17 @@ export class StatRepository extends Repository<Stat> {
     } catch {
       throw new InternalServerErrorException();
     }
+  }
+
+  async getPlayerStats(playerId: number) {
+    const stat = await this.createQueryBuilder('stat')
+      .where('stat.playerId = :playerId', { playerId })
+      .getOne();
+
+    if (!stat) {
+      throw new UnauthorizedException();
+    }
+
+    return stat;
   }
 }
