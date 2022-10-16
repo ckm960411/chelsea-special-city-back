@@ -30,6 +30,16 @@ export class PlayersService {
     return player;
   }
 
+  async getPlayerById(playerId: number) {
+    const player = await this.playersRepository.findPlayerById(playerId);
+
+    if (!player) {
+      throw new UnauthorizedException();
+    }
+
+    return player;
+  }
+
   async searchPlayers(name: string) {
     const players = await this.playersRepository.searchPlayers(name);
 

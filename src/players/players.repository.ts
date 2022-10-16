@@ -64,8 +64,14 @@ export class PlayerRepository extends Repository<Player> {
     }
   }
 
+  async findPlayerById(id: number) {
+    const player = await this.findOne({ where: { id } });
+
+    return player;
+  }
+
   async updatePlayer(updatePlayerDto: UpdatePlayerDto, playerId: number) {
-    const player = await this.findOne({ where: { id: playerId } });
+    const player = await this.findPlayerById(playerId);
 
     if (!player) {
       throw new NotFoundException('일치하는 선수가 없습니다.');
